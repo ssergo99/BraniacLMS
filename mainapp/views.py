@@ -31,10 +31,13 @@ class NewsView(TemplateView):
     template_name = 'mainapp/news.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['news_title'] = 'Громкий новостной заголовок'
-        context['news_preview'] = 'Предварительное описание, которое заинтересует каждого'
-        context['range'] = range(5)
-        return context
+        context_data = super().get_context_data(**kwargs)
+        context_data['object_list'] = News.objects.filter(deleted=False)
+        return context_data
 
-
+class NewsDetail(TemplateView):
+    template_name = 'mainapp/news_detail.html'
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['object'] = get_object_or_404(News, pk=self.kwargs.get('pk'))
+        return context_data
