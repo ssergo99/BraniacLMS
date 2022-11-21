@@ -1,11 +1,14 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
+from config import settings
 
 # Create your models here.
 NULLABLE = {'blank': True, 'null': True}
 class BaseAbs(models.Model):
     class Meta:
         abstract = True
+        ordering = ('-created_at',)
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создано")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Обновлено")
@@ -75,3 +78,24 @@ class CourseTeachers(BaseAbs):
     class Meta:
         verbose_name = 'курс к преподавателю'
         verbose_name_plural = 'курсы к преподавателям'
+
+class CourseFeedback(BaseAbs):
+    RATINGS = (
+        (5,'⭐⭐⭐⭐⭐'),
+        (4, '⭐⭐⭐⭐'),
+        (3, '⭐⭐⭐'),
+        (2, '⭐⭐'),
+        (1, '⭐'),
+    )
+
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='')
+    rating = models.SmallIntegerField(choices=RATINGS, default=5, verbose_name='Рейтинг')
+    feedback = models.TextField(verbose_name='Отзыв', default='Без отзывов')
+
+    class Meta:
+        verbose_name = ''
+        verbose_name_plural = ''
+
+    def __str__(self):
+        return f'Отзыв на {self.course} от {self.user}'
