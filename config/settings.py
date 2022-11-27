@@ -27,7 +27,14 @@ SECRET_KEY = 'django-insecure-4*k$vd%8*4el-&iw=(4vjkr*m#@pcnrq_g$ajbqqqi*)6vq6+m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+if DEBUG:
+    INTERNAL_IPS = [
+        '127.0.0.1'
+    ]
+
+
 
 # Application definition
 
@@ -40,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'social_django',
     'markdownify.apps.MarkdownifyConfig',
+    'debug_toolbar',
     'crispy_forms',
     'authapp',
     'mainapp',
@@ -53,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -150,3 +159,63 @@ SOCIAL_AUTH_GITHUB_KEY = '3886c00e2ed8e7be3185'
 SOCIAL_AUTH_GITHUB_SECRET = 'a8dcc1307188ef912070cd82cfad274769d22e87'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient'
+        }
+    }
+}
+
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
+
+# EMAIL_HOST = ''
+# EMAIL_PORT = '25'
+# EMAIL_HOST_USER = ''
+# EMAIL_HOST_PASSWORD = ''
+# EMAIL_USE_SSL = True
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = 'emails-tmp'
+
+# LOGGING = {
+#     "version": 1,
+#     "disable_existing_loggers": False,
+#     "formatters": {
+#         "console": {
+#             "format": "[%(asctime)s] %(levelname)s %(name)s (%(lineno)d) %(message)s"
+#             },
+#         },
+#     "handlers": {
+#             "console": {"class": "logging.StreamHandler", "formatter": "console"},
+#     },
+#     "loggers": {
+#             "django": {"level": "INFO", "handlers": ["console"]},
+#         },
+# }
+
+LOG_FILE = BASE_DIR / "log" / "main_log.log"
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "console": {
+            "format": "[%(asctime)s] %(levelname)s %(name)s (%(lineno)d) %(message)s"
+        },
+    },
+    "handlers": {
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": LOG_FILE,
+            "formatter": "console",
+        },
+        "console": {"class": "logging.StreamHandler", "formatter": "console"},
+    },
+    "loggers": {
+        "django": {"level": "INFO", "handlers": ["file", "console"]},
+    },
+}
