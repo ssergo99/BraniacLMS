@@ -1,5 +1,6 @@
 {% extends 'mainapp/base.html' %}
-{% load email_to_mailto %}
+{% load email_to_mailto crispy_forms_tags %}
+
 
 {% block content %}
 
@@ -86,6 +87,17 @@
   
 </div>
 </p>
-
+{% if form %}
+<p>
+<h3>Отправить сообщение в техподдержку</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary btn-block">Отправить</button>
+</form>
+</p>
+{% endif %}
 {% endblock %}
+
+
 

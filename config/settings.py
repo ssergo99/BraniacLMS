@@ -179,7 +179,7 @@ CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
 # EMAIL_HOST_PASSWORD = ''
 # EMAIL_USE_SSL = True
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = 'emails-tmp'
+EMAIL_FILE_PATH = 'emails-tmp/'
 
 # LOGGING = {
 #     "version": 1,

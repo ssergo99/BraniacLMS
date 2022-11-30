@@ -25,7 +25,7 @@ class MailFeedbackForm(forms.Form):
     user_id = forms.IntegerField(widget=forms.HiddenInput)
     message = forms.CharField(
         widget=forms.Textarea,
-        help_text=_("Enter your message"),
+        help_text=_("Введите ваше сообщение"),
         label=_("Message"), )
 
     def __init__(self, *args, user=None, **kwargs):
