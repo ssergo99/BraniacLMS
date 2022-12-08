@@ -1,0 +1,26 @@
+[
+{
+    "model": "mainapp.course",
+    "pk": 1,
+    "fields": {
+        "created_at": "2022-11-20T15:53:22.961Z",
+        "updated_at": "2022-11-21T08:03:37.042Z",
+        "deleted": false,
+        "name": "Курс 1",
+        "description": "Курс номер один",
+        "cost": "1500.00"
+    }
+},
+{
+    "model": "mainapp.course",
+    "pk": 2,
+    "fields": {
+        "created_at": "2022-11-20T16:42:51.167Z",
+        "updated_at": "2022-11-20T16:42:51.167Z",
+        "deleted": false,
+        "name": "Курс 2",
+        "description": "Описание курса 2",
+        "cost": "3000.00"
+    }
+}
+]
