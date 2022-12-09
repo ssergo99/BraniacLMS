@@ -34,8 +34,6 @@ if DEBUG:
         '127.0.0.1'
     ]
 
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -58,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -173,6 +172,7 @@ CACHES = {
 CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
 CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
 
+LOCALE_PATHS = [BASE_DIR / "locale"]
 # EMAIL_HOST = ''
 # EMAIL_PORT = '25'
 # EMAIL_HOST_USER = ''
@@ -219,3 +219,5 @@ LOGGING = {
         "django": {"level": "INFO", "handlers": ["file", "console"]},
     },
 }
+
+SELENIUM_DRIVER_PATH_FF = '/Users/sergeyschipak/djangoBasics/braniaclms/bin'

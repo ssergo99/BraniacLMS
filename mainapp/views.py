@@ -18,7 +18,7 @@ from django.contrib import messages
 from django.http.response import HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
 from mainapp import tasks as mainapp_tasks
-
+import pickle
 
 # Create your views here.
 
@@ -138,6 +138,11 @@ class CoursesDetailView(TemplateView):
                 course=context['course_object']
             )
             cache.set(feedback_list_key, context['feedback_list'], timeout=300)
+            # # Archive object for tests --->
+            #
+            # with open(f"BraniacLMS/mainapp/fixtures/006_feedback_list_{pk}.bin", "wb") as outf:
+            #     pickle.dump(context["feedback_list"], outf)
+            # # <--- Archive object for tests
         else:
             context['feedback_list'] = cached_feedback_list
 
